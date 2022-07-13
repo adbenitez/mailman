@@ -1,8 +1,0 @@
-Vítejte v mailing listu "$display_name"!
-
-Pro odeslání nového příspěvku jako adresu příjemce používejte:
-	$listname
-
-Zrušit odběr a další změny konfigurace můžete provést odesláním emailu na adresu:
-	$request_email
-obsahující slovo 'help' (bez uvozovek) buď v předmětu, nebo těle zprávy. Ke změně nastavení budete potřebovat heslo, které zde z bezpečnostních důvodů nepřikládáme. Pokud jste jej zapomněli, budete si jej muset resetovat ve webovém rozhraní.
