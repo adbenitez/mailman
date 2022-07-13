@@ -99,6 +99,7 @@ def send_welcome_message(mlist, member, language, text=''):
             _('Welcome to the "${mlist.display_name}" mailing list${digmode}'),
             text, language)
     msg['X-No-Archive'] = 'yes'
+    msg['List-Post'] = '<mailto:' + mlist.fqdn_listname + '>'
     msg.send(mlist, verp=as_boolean(config.mta.verp_personalized_deliveries))
 
 
