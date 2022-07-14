@@ -20,7 +20,7 @@
 import re
 import logging
 
-from email.utils import formataddr, make_msgid
+from email.utils import formataddr, make_msgid, parseaddr
 from mailman.config import config
 from mailman.core.i18n import _
 from mailman.handlers.cook_headers import uheader
@@ -73,25 +73,33 @@ class Cleanse:
         if mlist.anonymous_list:
             log.info('post to %s from %s anonymized',
                      mlist.fqdn_listname, msg.get('from'))
+            name, _addr = parseaddr(msg.get('from'))
             del msg['from']
             del msg['reply-to']
             del msg['sender']
             del msg['organization']
             del msg['return-path']
+            # Autocrypt header contains sender's address
+            del msg['autocrypt']
             # Hotmail sets this one
             del msg['x-originating-email']
             # And these can reveal the sender too
             del msg['received']
             # And so can the message-id so replace it.
-            del msg['message-id']
-            msg['Message-ID'] = make_msgid()
+            #del msg['message-id']
+            #msg['Message-ID'] = make_msgid()
             # And something sets these
             del msg['x-mailfrom']
             del msg['x-envelope-from']
             # And now remove all but the keepers.
             self.remove_nonkeepers(msg)
+            # preserve display name
             i18ndesc = str(uheader(mlist, mlist.description, 'From'))
-            msg['From'] = formataddr((i18ndesc, mlist.posting_address))
+            if name:
+                msg['From'] = formataddr((name, mlist.posting_address))
+                msg['Sender'] = formataddr((i18ndesc, mlist.posting_address))
+            else:
+                msg['From'] = formataddr((i18ndesc, mlist.posting_address))
             msg['Reply-To'] = mlist.posting_address
         # Some headers can be used to fish for membership.
         del msg['return-receipt-to']
