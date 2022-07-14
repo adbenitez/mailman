@@ -43,6 +43,7 @@ class PostingPipeline(BasePipeline):
     description = _('The built-in posting pipeline.')
 
     _default_handlers = (
+        'deltachat',
         'validate-authenticity',
         'mime-delete',
         'tagger',
@@ -51,7 +52,7 @@ class PostingPipeline(BasePipeline):
         'cleanse',
         'cleanse-dkim',
         'cook-headers',
-        'subject-prefix',
+        #'subject-prefix',  # TODO: enable when DC is fixed to hide subject from DC clients in mailing lists
         'rfc-2369',
         'to-archive',
         'to-digest',
