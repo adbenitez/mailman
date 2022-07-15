@@ -56,12 +56,12 @@ class BuiltInChain:
         # Check for nonmember moderation.
         ('nonmember-moderation', LinkAction.jump, 'moderation'),
         # Do all of the following before deciding whether to hold the message.
-        ('administrivia', LinkAction.defer, None),
+        #('administrivia', LinkAction.defer, None),
         ('implicit-dest', LinkAction.defer, None),
         ('max-recipients', LinkAction.defer, None),
         ('max-size', LinkAction.defer, None),
         ('news-moderation', LinkAction.defer, None),
-        ('no-subject', LinkAction.defer, None),
+        #('no-subject', LinkAction.defer, None),
         ('digests', LinkAction.defer, None),
         ('suspicious-header', LinkAction.defer, None),
         # Now if any of the above hit, jump to the hold chain.
