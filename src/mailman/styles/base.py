@@ -246,7 +246,7 @@ class Moderation:
         # For cut-n-paste convenience.
         mlist = mailing_list
         mlist.max_num_recipients = 10
-        mlist.max_message_size = 40               # KB
+        mlist.max_message_size = 2000             # KB
         mlist.require_explicit_destination = True
         mlist.bounce_matching_headers = """
 # Lines that *start* with a '#' are comments.
