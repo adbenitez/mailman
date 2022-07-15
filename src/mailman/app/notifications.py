@@ -72,7 +72,7 @@ def send_welcome_message(mlist, member, language, text=''):
     :param mlist: The mailing list.
     :type mlist: IMailingList
     :param member: The member to send the welcome message to.
-    :param address: IMember
+    :param member: IMember
     :param language: The language of the response.
     :type language: ILanguage
     """
