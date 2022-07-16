@@ -16,5 +16,4 @@ class DeltaChatHandler:
 
     def process(self, mlist, msg, msgdata):
         """See `IHandler`."""
-        msgdata["nodecorate"] = True
         del msg["Subject"]  # TODO: remove when DC is fixed to hide subject
