@@ -130,10 +130,10 @@ class Connection:
         # smtplib.SMTP.sendmail requires the message string to be pure ascii.
         # We have seen malformed messages with non-ascii unicodes, so ensure
         # we have pure ascii.
-        msgtext = msgtext.encode('ascii', 'replace').decode('ascii')
         try:
             log.debug('envsender: %s, recipients: %s, size(msgtext): %s',
                       envsender, recipients, len(msgtext))
+            msgtext = msgtext.encode('utf-8', 'replace')
             results = self._connection.sendmail(envsender, recipients, msgtext)
         except smtplib.SMTPException:
             # For safety, close this connection.  The next send attempt will
