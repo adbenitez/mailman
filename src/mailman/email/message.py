@@ -55,7 +55,7 @@ class Message(email.message.Message):
             value = email.message.Message.as_string(self)
         except (KeyError, LookupError, UnicodeEncodeError):
             value = email.message.Message.as_bytes(self).decode(
-                'ascii', 'replace')
+                'utf-8', 'replace')
         # Also ensure no unicode surrogates in the returned string.
         return email.utils._sanitize(value)
 
