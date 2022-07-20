@@ -59,7 +59,7 @@ class BuiltInChain:
         #('administrivia', LinkAction.defer, None),
         ('implicit-dest', LinkAction.defer, None),
         ('max-recipients', LinkAction.defer, None),
-        ('max-size', LinkAction.defer, None),
+        ('max-size', LinkAction.jump, 'reject'),
         ('news-moderation', LinkAction.defer, None),
         #('no-subject', LinkAction.defer, None),
         ('digests', LinkAction.defer, None),
