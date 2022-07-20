@@ -150,7 +150,7 @@ class UserNotification(Message):
 
     def __init__(self, recipients, sender, subject=None, text=None, lang=None):
         Message.__init__(self)
-        charset = (lang.charset if lang is not None else 'us-ascii')
+        charset = 'utf-8'
         subject = ('(no subject)' if subject is None else subject)
         if text is not None:
             self.set_payload(text.encode(charset, errors='replace'), charset)
