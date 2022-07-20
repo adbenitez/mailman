@@ -337,7 +337,7 @@ class SubscriptionWorkflow(_SubscriptionWorkflowCommon):
             # to avoid any useless bounce processing.
             msg = UserNotification(
                 self.mlist.owner_address, self.mlist.owner_address,
-                subject, text, self.mlist.preferred_language)
+                subject, subject + '\n\n' + text, self.mlist.preferred_language)
             msg.send(self.mlist)
         # The workflow must stop running here.
         raise StopIteration
@@ -505,7 +505,7 @@ class UnSubscriptionWorkflow(_SubscriptionWorkflowCommon):
             # to avoid any useless bounce processing.
             msg = UserNotification(
                 self.mlist.owner_address, self.mlist.owner_address,
-                subject, text, self.mlist.preferred_language)
+                subject, subject + '\n\n' + text, self.mlist.preferred_language)
             msg.send(self.mlist)
         # The workflow must stop running here
         raise StopIteration
@@ -648,7 +648,7 @@ def _handle_confirmation_needed_events(event, template_name):
         contact_address=event.mlist.owner_address,
         ))
     msg = UserNotification(
-        email_address, confirm_address, subject, text,
+        email_address, confirm_address, subject, subject + '\n\n' + text,
         event.mlist.preferred_language)
     del msg['auto-submitted']
     msg['Auto-Submitted'] = 'auto-generated'

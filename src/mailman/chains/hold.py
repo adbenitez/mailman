@@ -207,7 +207,7 @@ class HoldChain(TerminalChainBase):
                 **substitutions)))
             adminaddr = mlist.bounces_address
             nmsg = UserNotification(
-                msg.sender, adminaddr, subject, text,
+                msg.sender, adminaddr, subject, subject + '\n\n' + text,
                 getUtility(ILanguageManager)[send_language_code])
             nmsg.send(mlist)
         # Now the message for the list moderators.  This one should appear to
@@ -233,7 +233,7 @@ class HoldChain(TerminalChainBase):
                 nmsg.set_type('multipart/mixed')
                 template = getUtility(ITemplateLoader).get(
                     'list:admin:action:post', mlist)
-                text = MIMEText(expand(template, mlist, substitutions),
+                text = MIMEText(subject + '\n\n' + expand(template, mlist, substitutions),
                                 _charset=charset)
                 dmsg = MIMEText(wrap(_("""\
 If you reply to this message, keeping the Subject: header intact, Mailman will

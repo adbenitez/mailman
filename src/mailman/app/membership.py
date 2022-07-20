@@ -150,7 +150,7 @@ def delete_member(mlist, email, admin_notif=None, userack=None):
             mlist, dict(
                 member=formataddr((display_name, email)),
                 ))
-        msg = OwnerNotification(mlist, subject, text,
+        msg = OwnerNotification(mlist, subject, subject + '\n\n' + text,
                                 roster=mlist.administrators)
         msg.send(mlist)
 

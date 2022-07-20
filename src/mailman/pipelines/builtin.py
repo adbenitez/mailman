@@ -30,6 +30,7 @@ class OwnerPipeline(BasePipeline):
     description = _('The built-in owner pipeline.')
 
     _default_handlers = (
+        'deltachat',
         'owner-recipients',
         'to-outgoing',
         )

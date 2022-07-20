@@ -32,6 +32,7 @@ class VirginPipeline(BasePipeline):
     description = _('The virgin queue pipeline.')
 
     _default_handlers = (
+        'deltachat',
         'cook-headers',
         'rfc-2369',
         'to-outgoing',

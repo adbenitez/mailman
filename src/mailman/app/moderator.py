@@ -308,7 +308,7 @@ def send_rejection(mlist, request, recip, comment, origmsg=None, lang=None):
                  str(origmsg)
                  ])
         subject = _('Request to mailing list "${display_name}" rejected')
-    msg = UserNotification(recip, mlist.bounces_address, subject, text, lang)
+    msg = UserNotification(recip, mlist.bounces_address, subject, subject + '\n\n' + text, lang)
     msg.send(mlist)
 
 

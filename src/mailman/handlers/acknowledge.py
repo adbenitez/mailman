@@ -74,5 +74,5 @@ class Acknowledge:
         # queue.
         subject = _('${display_name} post acknowledgment')
         usermsg = UserNotification(sender, mlist.bounces_address,
-                                   subject, text, language)
+                                   subject, subject + '\n\n' + text, language)
         usermsg.send(mlist)

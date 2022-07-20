@@ -93,11 +93,11 @@ def send_welcome_message(mlist, member, language, text=''):
         digmode = (''                                   # noqa: F841
                    if member.delivery_mode is DeliveryMode.regular
                    else _(' (Digest mode)'))
+        subject = _('Welcome to the "${mlist.display_name}" mailing list${digmode}')
         msg = UserNotification(
             formataddr((display_name, member.address.email)),
             mlist.request_address,
-            _('Welcome to the "${mlist.display_name}" mailing list${digmode}'),
-            text, language)
+            subject, subject + '\n\n' + text, language)
     msg['X-No-Archive'] = 'yes'
     if mlist.allow_list_posts or mlist.administrators.get_member(str(member.address)):
         msg['List-Post'] = '<mailto:' + mlist.fqdn_listname + '>'
@@ -129,11 +129,11 @@ def send_goodbye_message(mlist, address, language):
         list_requests=mlist.request_address,
         )))
     with _.using(language.code):
+        subject = _('You have been unsubscribed from the ${mlist.display_name} '
+                    'mailing list')
         msg = UserNotification(
             address, mlist.bounces_address,
-            _('You have been unsubscribed from the ${mlist.display_name} '
-              'mailing list'),
-            goodbye_message, language)
+            subject, subject + '\n\n' + goodbye_message, language)
     msg.send(mlist, verp=as_boolean(config.mta.verp_personalized_deliveries))
 
 
@@ -155,7 +155,7 @@ def send_admin_subscription_notice(mlist, address, display_name):
         mlist, dict(
             member=formataddr((display_name, address)),
             ))
-    msg = OwnerNotification(mlist, subject, text, roster=mlist.administrators)
+    msg = OwnerNotification(mlist, subject, subject + '\n\n' + text, roster=mlist.administrators)
     msg.send(mlist)
 
 
@@ -178,7 +178,7 @@ def send_admin_disable_notice(mlist, event, display_name):
     text = expand(
         getUtility(ITemplateLoader).get('list:admin:notice:disable', mlist),
         mlist, data)
-    msg = OwnerNotification(mlist, subject, text, roster=mlist.administrators)
+    msg = OwnerNotification(mlist, subject, subject + '\n\n' + text, roster=mlist.administrators)
     dsn = _get_dsn(event.message_id)
     if dsn:
         msg = _make_multipart(msg)
@@ -206,7 +206,7 @@ def send_admin_increment_notice(mlist, event, display_name):
     text = expand(
         getUtility(ITemplateLoader).get('list:admin:notice:increment', mlist),
         mlist, data)
-    msg = OwnerNotification(mlist, subject, text, roster=mlist.administrators)
+    msg = OwnerNotification(mlist, subject, subject + '\n\n' + text, roster=mlist.administrators)
     dsn = _get_dsn(event.message_id)
     if dsn:
         msg = _make_multipart(msg)
@@ -233,7 +233,7 @@ def send_admin_removal_notice(mlist, address, display_name):
     text = expand(
         getUtility(ITemplateLoader).get('list:admin:notice:removal', mlist),
         mlist, data)
-    msg = OwnerNotification(mlist, subject, text, roster=mlist.administrators)
+    msg = OwnerNotification(mlist, subject, subject + '\n\n' + text, roster=mlist.administrators)
     msg.send(mlist)
 
 
@@ -251,11 +251,11 @@ def send_user_disable_warning(mlist, address, language):
     """
     warning_message = wrap(getUtility(ITemplateLoader).get(
         'list:user:notice:warning', mlist, language=language.code))
+    subject = _('Your subscription for ${mlist.display_name} mailing list'
+                ' has been disabled')
     warning_message_text = expand(
         warning_message, mlist, dict(sender_email=address))
     msg = UserNotification(
         address, mlist.bounces_address,
-        _('Your subscription for ${mlist.display_name} mailing list'
-          ' has been disabled'),
-        warning_message_text, language)
+        subject, subject + '\n\n' + warning_message_text, language)
     msg.send(mlist, verp=as_boolean(config.mta.verp_personalized_deliveries))

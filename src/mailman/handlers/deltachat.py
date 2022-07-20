@@ -16,6 +16,7 @@ class DeltaChatHandler:
 
     def process(self, mlist, msg, msgdata):
         """See `IHandler`."""
-        if not msg.get('chat-version'):
+        if not msg.get("chat-version"):
             msg["Chat-Version"] = "1.0"
-        del msg["Subject"]  # TODO: remove when DC is fixed to hide subject
+        else:
+            del msg["Subject"]  # TODO: remove when DC is fixed to hide subject
