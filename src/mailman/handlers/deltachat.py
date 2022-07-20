@@ -18,5 +18,4 @@ class DeltaChatHandler:
         """See `IHandler`."""
         if not msg.get("chat-version"):
             msg["Chat-Version"] = "1.0"
-        else:
-            del msg["Subject"]  # TODO: remove when DC is fixed to hide subject
+        del msg["Subject"]  # TODO: remove when DC is fixed to hide subject
