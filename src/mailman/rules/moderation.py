@@ -76,9 +76,13 @@ class MemberModeration:
         member = _find_sender_member(mlist, msg)
         if member is None:
             return False
-        action = (mlist.default_member_action
-                  if member.moderation_action is None
-                  else member.moderation_action)
+        if member.moderation_action is None:
+            if mlist.administrators.get_member(str(member.address)):
+                action = Action.defer
+            else:
+                action = mlist.default_member_action
+        else:
+            action = member.moderation_action
         if action is Action.defer:
             # The regular moderation rules apply.
             return False

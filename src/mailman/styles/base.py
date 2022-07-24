@@ -71,7 +71,7 @@ class BasicOperation:
         mlist.emergency = False
         mlist.personalize = Personalization.none
         mlist.default_member_action = Action.defer
-        mlist.default_nonmember_action = Action.hold
+        mlist.default_nonmember_action = Action.reject
         mlist.subscription_policy = SubscriptionPolicy.confirm
         mlist.unsubscription_policy = SubscriptionPolicy.confirm
         mlist.member_roster_visibility = RosterVisibility.moderators
@@ -220,6 +220,7 @@ class Announcement:
         # For cut-n-paste convenience.
         mlist = mailing_list
         mlist.allow_list_posts = False
+        mlist.default_member_action = Action.reject
         mlist.send_welcome_message = True
         mlist.send_goodbye_message = True
         mlist.anonymous_list = False
