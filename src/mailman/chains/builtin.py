@@ -57,13 +57,13 @@ class BuiltInChain:
         ('nonmember-moderation', LinkAction.jump, 'moderation'),
         # Do all of the following before deciding whether to hold the message.
         #('administrivia', LinkAction.defer, None),
-        ('implicit-dest', LinkAction.defer, None),
-        ('max-recipients', LinkAction.defer, None),
+        ('implicit-dest', LinkAction.jump, 'reject'),
+        ('max-recipients', LinkAction.jump, 'reject'),
         ('max-size', LinkAction.jump, 'reject'),
         ('news-moderation', LinkAction.defer, None),
         #('no-subject', LinkAction.defer, None),
-        ('digests', LinkAction.defer, None),
-        ('suspicious-header', LinkAction.defer, None),
+        ('digests', LinkAction.jump, 'reject'),
+        ('suspicious-header', LinkAction.jump, 'reject'),
         # Now if any of the above hit, jump to the hold chain.
         ('any', LinkAction.jump, 'hold'),
         # Finally, the builtin chain jumps to acceptance.
