@@ -25,7 +25,9 @@ from mailman.config import config
 from mailman.core.i18n import _
 from mailman.handlers.cook_headers import uheader
 from mailman.interfaces.handler import IHandler
+from mailman.interfaces.usermanager import IUserManager
 from public import public
+from zope.component import getUtility
 from zope.interface import implementer
 
 
@@ -73,7 +75,7 @@ class Cleanse:
         if mlist.anonymous_list:
             log.info('post to %s from %s anonymized',
                      mlist.fqdn_listname, msg.get('from'))
-            name, _addr = parseaddr(msg.get('from'))
+            name, addr = parseaddr(msg.get('from'))
             del msg['from']
             del msg['reply-to']
             del msg['sender']
@@ -94,12 +96,8 @@ class Cleanse:
             # And now remove all but the keepers.
             self.remove_nonkeepers(msg)
             # preserve display name
-            i18ndesc = str(uheader(mlist, mlist.description, 'From'))
-            if name:
-                msg['From'] = formataddr((name, mlist.posting_address))
-                msg['Sender'] = formataddr((i18ndesc, mlist.posting_address))
-            else:
-                msg['From'] = formataddr((i18ndesc, mlist.posting_address))
+            user_id = getUtility(IUserManager).get_user(addr).user_id
+            msg['From'] = formataddr((name, f'{user_id}@{mlist.mail_host}'))
             msg['Reply-To'] = mlist.posting_address
         # Some headers can be used to fish for membership.
         del msg['return-receipt-to']
