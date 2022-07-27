@@ -49,7 +49,7 @@ class Digester:
 
     def __init__(self, mlist, volume, digest_number):
         self._mlist = mlist
-        self._charset = mlist.preferred_language.charset
+        self._charset = 'utf-8'
         # This will be used in the Subject, so use $-strings.
         self._digest_id = _(
             '${mlist.display_name} Digest, Vol ${volume}, Issue '
