@@ -152,7 +152,7 @@ class Bounces:
         mlist.forward_unrecognized_bounces_to = (
             UnrecognizedBounceDisposition.administrators)
         mlist.process_bounces = True
-        mlist.bounce_score_threshold = 5.0
+        mlist.bounce_score_threshold = 10.0
         mlist.bounce_info_stale_after = timedelta(days=7)
         mlist.bounce_you_are_disabled_warnings = 3
         mlist.bounce_you_are_disabled_warnings_interval = timedelta(days=7)
