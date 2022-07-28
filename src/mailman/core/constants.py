@@ -33,7 +33,7 @@ class SystemDefaultPreferences:
     acknowledge_posts = False
     hide_address = True
     receive_list_copy = True
-    receive_own_postings = True
+    receive_own_postings = False
     delivery_mode = DeliveryMode.regular
     delivery_status = DeliveryStatus.enabled
 
